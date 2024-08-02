@@ -36,11 +36,15 @@ async function run() {
 
     app.get("/products", async (req, res) => {
       const filter = req.query;
-      console.log(filter);
+
       const query = {
         price: {
           $gte: parseInt(filter.min) || 0,
           $lte: parseInt(filter.max) || 10000,
+        },
+        title: {
+          $regex: filter.search,
+          $options: "i",
         },
       };
       const options = {
