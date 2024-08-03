@@ -36,6 +36,9 @@ async function run() {
 
     app.get("/products", async (req, res) => {
       const filter = req.query;
+      let search = req.query.search;
+
+      console.log(search);
 
       const query = {
         price: {
@@ -43,7 +46,7 @@ async function run() {
           $lte: parseInt(filter.max) || 10000,
         },
         title: {
-          $regex: filter.search,
+          $regex: search || "",
           $options: "i",
         },
       };
